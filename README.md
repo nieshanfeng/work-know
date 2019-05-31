@@ -2,7 +2,7 @@
 
 
 ### 笔记内容将涉及如下式面
-   &#10084; [java](https://github.com/nieshanfeng/work-know/java)  
+   &#10084; [java](https://github.com/nieshanfeng/work-know/tree/master/Java)  
    &#10084; **`数据库`**  
    &#10084; **`大数据`**  
    &#10084; **`微服务`**  
