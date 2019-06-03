@@ -42,11 +42,15 @@
     ```
     >pip install ngxtop
     ```
-  - https://github.com/lebinh/ngxtop
+    
+  - 指定配置文件: ngxtop -c /etc/nginx/nginx.conf
+  - 查询状态是200: ngxtop -c /etc/nginx/nginx.conf -i 'status== 200'
+  - 查询访问最多ip ngxtop -c /etc/nginx/nginx.conf -g remote_addr
+  - 官方地址: https://github.com/lebinh/ngxtop
 
 ### nginx-rrd 图形化监控
 
-
+  - 官方地址: http://www.linuxde.net/2012/04/9537.html
 
 
 ### Nginx优化
