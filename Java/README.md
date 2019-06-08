@@ -8,4 +8,8 @@
    
    
 #####参考文档
-jdk工具文件官方文档:https://docs.oracle.com/javase/8/docs/technotes/tools/unix/index.html  
+java官方文档:https://docs.oracle.com/javase/specs/index.html 
+https://docs.oracle.com/javase/8/index.html  
+
+
+jdk8工具集使用官方文档:https://docs.oracle.com/javase/8/docs/technotes/tools/unix/index.html   
