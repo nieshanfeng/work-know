@@ -1,0 +1,111 @@
+##  class字节码
+
+
+
+## 查看字节码
+  - javap是JDK自带的反汇编器，可以查看java编译器为我们生成的字节码
+  - 先编译：javac Test.java
+  - 执行反编译 
+  ---
+      javap -verbose Test.class 
+      或 
+      javap -c Test 
+  
+  
+##  i++ 与++i 哪个效率高
+  - i++  先引用再加1
+  - ++i  先加1后引用
+  - for时，字节码是一样的，所以效率一样
+  
+## 常用代码优化方法
+  - 尽量重用对象，不要循环创建对象，比如:for循环字符串拼接
+  - 容器类初始化的时候指定长度
+  ---
+      List<String> collection=new ArrayList<String>(5);
+      Map<String,String> map=new HashMap<String,String>(32);
+  - ArrayList随机遍历快，LinkedList添加删除快
+  - 集合遍历尽量减少重复计算
+  ---
+      for(int i=0,len=collection.size();i<len;i++){}
+  - 使用Entry遍历Map
+  ---
+      for(Map.Entry<String,String> entry:map.entrySet()){
+          String key=entry.getKey();
+          String value=entry.getValue();
+      }
+  - 大数组复制用System.arraycopy
+  - 尽量使用基本类型而不是包装类型
+  - 不要手动调用System.gc()
+  - 及时消除过期对象的引用，防止内存泄漏
+  - 尽量使用局部变量，减少变量的作用域
+  - 尽量使用非同步的的容器ArrayList
+  - 尽量减少同步作用范围，synchronized代码块
+  - ThreadLocal缓存线程不安全的对象，SimpleDataFormat
+  - 尽量使用延迟加载
+  ---
+      public class Singleton{
+          private Singleton(){}
+          
+          private static class SingletonHolder{
+              private static Singleton instance=new Singleton();
+          }
+          
+          public static Singleton getInstance(){
+              return SingletonHolder.instance;
+          }
+      }
+  - 尽量减少使用反射，加缓存
+  - 尽量使用连接池、线程池、对象池、缓存
+  - 及时释放资源、I/O流、Socket、数据库连接
+  - 慎用异常、不要用抛异常来表示正常业务逻辑
+  - String操作尽量少用正则表达式
+  ---
+      replaceAll split
+  - 日志输出注意使用不同的级别
+  - 日志中参数拼接使用占位符
+  ---
+      log.info("orderId:"+orderId);//不推荐
+      log.info("orderId:{}",orderId);//推荐
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ava虚拟机规范
+  https://docs.oracle.com/javase/specs/jvms/se8/html/index.html
+  java语言规范
+  https://docs.oracle.com/javase/specs/jls/se8/html/index.html
+  javap：
+  https://docs.oracle.com/javase/8/docs/technotes/tools/unix/javap.html
+  字段描述符
+  https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.3.2
+  方法描述符
+  https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.3.3
+  字节码指令：
+  https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-6.html
+  常量池：
+  https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.4
+  本地变量表：
+  https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.6.1
+  https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.7.13
+  操作数栈：
+  https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.6.2
+  Code属性：
+  https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.7.3
+  LineNumberTable：
+  https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.7.12
+  constant variable：
+  https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.12.4
+  常量表达式
+  https://docs.oracle.com/javase/specs/jls/se8/html/jls-15.html#jls-15.28
+  String.intern
+  https://blog.csdn.net/goldenfish1919/article/details/80410349
+  String去重
+  https://blog.csdn.net/goldenfish1919/article/details/20233263
