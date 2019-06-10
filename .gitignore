@@ -1,0 +1,36 @@
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+
+###Maven template
+/target
+pom.xml.tag
+
+
+###Java template
+# Compiled class file
+*.class
+
+
+
+#Log file
+*.log
+
+#Package Files
+*.jar
+*.war
+*.zip
+*.tar.gz
