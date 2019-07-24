@@ -228,6 +228,105 @@ GET http://127.0.0.1:9200/megacorp/employee/_search
   - 分页
   GET http://localhost:9200/website/blog/_search?size=5  
   GET http://localhost:9200/website/blog/_search?size=5&from=5  
+
+
+## 结构化搜索
+  - 使用term过滤器
+      ```
+      POST /my_store/products/_bulk
+      { "index":{"_id":1 }}
+      { "price":10, "productID":"XHDK-A-1293-#fJ3" }
+      { "index":{ "_id":2 }}
+      {"price":20, "productID":"XHDK-B-9947-#kL5" }
+      { "index":{ "_id":3 }}
+      {"price":30, "productID":"JODL-X-1937-#pV7" }
+      { "index":{ "_id":4 }}
+      {"price":30, "productID":"QQPX-R-3956-#aD8" }
+      
+      GET http://127.0.0.1:9200/my_store/products/_search
+      {
+         "query":{
+             "term":{ 
+                "price":20
+             }
+         }
+      }
+      
+      ```
+  - 布尔过滤器 `bool`
+  ```
+  {  
+     "bool":{
+        "must":[].
+        "should":[],
+        "must_not":[]
+     }
+   }
+   must :所有分句必须匹配，与AND相同
+   must_not :所有分句都必须不匹配，与NOT相同
+   should :至少有一个分句匹配，与OR相同
+   ```
+  - 嵌套布尔过滤器
+  ```
+    GET http://127.0.0.1:9200/my_store/products/_search
+     {
+         "query":{
+             "bool":{ 
+                "should" :[
+                   { "term":{"productID":"KDKE-B-9947-#kL5"}},
+                   { "bool":{
+                      "must":[
+                        {"term":{"productID":"JODL-X-1937-#pV7"}},
+                        {"term":{"price":20}}
+                 ]
+             }
+         }
+      }
+  ```
   
+  - 范围 `range`
+  ```
+  "range"{
+    "price":{
+       "gt":20,
+       "lt":40
+    }
+  }
   
-  
+  gt : > 大于
+  lt : < 小于
+  gte : >= 大于或等于
+  lte : <= 小于或等于
+  ```
+  - `exists 过滤器`  字段存在过滤器
+      ```
+      POST http://127.0.0.1:9200/my_index/posts/_bulk
+       { "index":{"_id":1 }}
+       { "tags":["search"] }
+       { "index":{ "_id":2 }}
+       {"tags":["search","open_source"]}
+       { "index":{ "_id":3 }}
+       {"other_field":"some data"}
+       { "index":{ "_id":4 }}
+       {"tags":null}
+       { "index":{ "_id":5 }}
+       {"tags":["search",null]}
+       
+       {
+            "query":{
+                "filter":{ 
+                   "exists":{ "field" : "tags"}
+                }
+            }
+         }
+      ```
+  - `missing 过滤器` 返回没有特定字段值的文档
+  ```
+  {
+      "query":{
+          "filter":{ 
+             "missing":{ "field" : "tags"}
+          }
+      }
+   }
+  ```
