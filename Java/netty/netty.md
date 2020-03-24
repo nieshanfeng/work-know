@@ -179,3 +179,12 @@ public class TimeClient {
     获取就绪Channel的集合，进行后续的I/O操作.
     - 一个多路复用器Selector可以同时轮询多个Channel，由于JDK使用了epoll()代替传统的select实现，所以它并没最大
     连接句柄1024/2048的限制。这也就意味着只需要一个线程负责Selector的轮询，就可以接入成成千上万的客户端。
+  - 多路复用模型
+    - select/poll
+      - 将channel注册到selector上，通过轮询channel是否就绪，将就绪的channel返回
+    - epoll
+      - 将channel注册到selector上，基于回调的方式(类似于监听者模式),告知selector哪些channel已经就绪，然后将就绪的channel返回
+    - select/poll和epoll性能分析
+      - 对比select/poll和epoll我们发现epoll效率更高
+      - 如果select/poll中注册大量的channel，就要不停的轮询每个channel,来判断哪些channel已经就绪，而epoll则不需要轮询
+      - jdk1.4是使用select/poll模型,jdk1.5以后把select/poll改为epoll模型
